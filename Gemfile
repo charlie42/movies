@@ -43,3 +43,17 @@ group :development do
   gem 'spring'
 end
 
+
+gem "mongoid"
+gem "capybara"
+gem "database_cleaner"
+gem "mongoid-rspec"
+gem "email_spec"
+gem "cucumber-rails"
+gem "launchy"
+gem "factory_girl_rails"
+gem "devise"
+gem "heroku"
+group :production do
+  gem 'thin'
+end
