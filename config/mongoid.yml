@@ -142,7 +142,7 @@ test:
         max_pool_size: 1
 
 production:
-  sessions:
+  clients:
     default:
       uri: mongodb://heroku_3tnmwpbd:vse4edau75o57lbtiqe94sf30o@ds157487.mlab.com:57487/heroku_3tnmwpbd
       options:
