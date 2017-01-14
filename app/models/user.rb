@@ -27,6 +27,8 @@ class User
 
   has_many :grades
 
+  field :graded_movies, type: Hash
+
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time

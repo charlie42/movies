@@ -27,7 +27,14 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = Movie.new(name:params[:movie][:name], rating:params[:movie][:rating], grade_count:1, grade_accumulator:params[:movie][:rating])
-
+    @user = User.find(current_user.id)
+    if @user.graded_movies.nil?
+      @user.graded_movies = Hash.new
+    end
+    @user.graded_movies[params[:movie][:name]] = params[:movie][:rating].to_i
+puts params[:movie][:name]
+puts @user.graded_movies
+@user.save
     #@movie.grade_count = 0
     #puts @movie.grade_count
     #@movie.grade_accumulator = params[:rating]
@@ -50,8 +57,26 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.grade_count += 1
     @movie.grade_accumulator += params[:movie][:rating].to_i
-    @movie.rating = @movie.grade_accumulator/@movie.grade_count
     @movie.name = params[:movie][:name]
+
+    @user = User.find(current_user.id)
+    if @user.graded_movies.nil?
+      @user.graded_movies = Hash.new
+    end
+#puts @user.graded_movies
+    if @user.graded_movies.key? params[:movie][:name]
+      old_grade = @user.graded_movies[params[:movie][:name]]
+#puts old_grade
+      @movie.grade_accumulator -= old_grade
+#puts @movie.grade_accumulator
+      @movie.grade_count -= 1
+#puts @movie.grade_count
+    end
+
+    @user.graded_movies[params[:movie][:name]] = params[:movie][:rating].to_i
+#puts "wwwwwwwwwwwww" + @user.graded_movies[params[:movie][:name]].to_s
+    @user.save
+    @movie.rating = @movie.grade_accumulator/@movie.grade_count
 
     respond_to do |format|
       if @movie.save

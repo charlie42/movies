@@ -9,6 +9,6 @@ class Movie
 
   validates :name, presence:true
   validates :rating, presence:true
-  validates :rating, numericality: { only_integer: true, less_than: 11}
+  validates :rating, numericality: { less_than: 11}
   validates_uniqueness_of :name, :case_sensitive => false
 end
