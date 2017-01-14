@@ -20,12 +20,17 @@ class MoviesController < ApplicationController
 
   # GET /movies/1/edit
   def edit
+
   end
 
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(movie_params)
+    @movie = Movie.new(name:params[:movie][:name], rating:params[:movie][:rating], grade_count:1, grade_accumulator:params[:movie][:rating])
+
+    #@movie.grade_count = 0
+    #puts @movie.grade_count
+    #@movie.grade_accumulator = params[:rating]
 
     respond_to do |format|
       if @movie.save
@@ -41,8 +46,15 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   # PATCH/PUT /movies/1.json
   def update
+
+    @movie = Movie.find(params[:id])
+    @movie.grade_count += 1
+    @movie.grade_accumulator += params[:movie][:rating].to_i
+    @movie.rating = @movie.grade_accumulator/@movie.grade_count
+    @movie.name = params[:movie][:name]
+
     respond_to do |format|
-      if @movie.update(movie_params)
+      if @movie.save
         format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
         format.json { render :show, status: :ok, location: @movie }
       else

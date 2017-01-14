@@ -24,7 +24,9 @@ class User
   field :last_sign_in_ip,    type: String
 
   validates_uniqueness_of :email, :case_sensitive => false
-  
+
+  has_many :grades
+
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time
