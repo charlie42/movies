@@ -141,12 +141,11 @@ test:
           mode: :primary
         max_pool_size: 1
 
-<% if ENV['MONGOHQ_URL'] %>
-  production:
-    sessions:
-      default:
-        uri: <%= ENV['MONGLAB_URL'] %>
-        options:
-          skip_version_check: true
-          safe: true
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGLAB_URL'] %>
+      options:
+        skip_version_check: true
+        safe: true
 <% end %>
